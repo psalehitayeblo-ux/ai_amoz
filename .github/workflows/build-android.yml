@@ -16,13 +16,15 @@ jobs:
         with:
           channel: stable
 
-      - name: Create Flutter project
-        run: flutter create ai_amoz --platforms android
+      - name: Create Flutter App
+        run: |
+          flutter create ai_amoz
+          cd ai_amoz
+          flutter pub get
 
       - name: Build APK
-        working-directory: ai_amoz
         run: |
-          flutter pub get
+          cd ai_amoz
           flutter build apk --release
 
       - name: Upload APK

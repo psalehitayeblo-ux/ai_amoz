@@ -1,34 +1,36 @@
-name: Build AI Amoz APK
+name: Build Android APK
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
+    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: 'stable'
 
-      - name: Create Flutter App
-        run: |
-          flutter create ai_amoz
-          cd ai_amoz
-          flutter pub get
+      - name: Flutter Doctor
+        run: flutter doctor -v
+
+      - name: Get dependencies
+        run: flutter pub get
 
       - name: Build APK
-        run: |
-          cd ai_amoz
-          flutter build apk --release
+        run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AI-Amoz-APK
-          path: ai_amoz/build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk

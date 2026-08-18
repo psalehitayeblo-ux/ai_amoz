@@ -17,9 +17,10 @@ jobs:
           channel: stable
 
       - name: Create Flutter project
-        run: flutter create . --platforms android
+        run: flutter create ai_amoz --platforms android
 
       - name: Build APK
+        working-directory: ai_amoz
         run: |
           flutter pub get
           flutter build apk --release
@@ -28,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AI-Amoz-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: ai_amoz/build/app/outputs/flutter-apk/app-release.apk
